@@ -1,22 +1,370 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>基于AI人脸识别技术的智能电子猫眼设计 - 答辩PPT</title>
-  <link rel="stylesheet" href="deck.css">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg-accent: #eff6ff;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --primary: #1d4ed8;
+      --primary-light: #dbeafe;
+      --accent: #0369a1;
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --warn: #b45309;
+      --warn-bg: #fffbeb;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --border: #e2e8f0;
+      --shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; overflow: hidden;
+      font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+      background: var(--bg); color: var(--text);
+    }
+    .deck { width: 100vw; height: 100vh; position: relative; }
+    .slide {
+      position: absolute; inset: 0;
+      display: none; flex-direction: column;
+      padding: 40px 56px 68px;
+      background: linear-gradient(160deg, #ffffff 0%, var(--bg) 45%, var(--bg-accent) 100%);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .slide.active { display: flex; opacity: 1; z-index: 1; }
+    .slide::after {
+      content: ""; position: absolute; top: 0; left: 0;
+      width: 6px; height: 100%;
+      background: linear-gradient(180deg, var(--primary) 0%, #60a5fa 100%);
+    }
+    .slide-header { margin-bottom: 16px; flex-shrink: 0; }
+    h1 {
+      font-size: 2.35rem; font-weight: 800; line-height: 1.3;
+      color: var(--text); letter-spacing: 0.01em;
+    }
+    h2 {
+      font-size: 1.65rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 12px;
+    }
+    h2::before {
+      content: ""; width: 5px; height: 1.1em;
+      background: var(--primary); border-radius: 3px; flex-shrink: 0;
+    }
+    h3 {
+      font-size: 0.95rem; font-weight: 700; color: var(--primary);
+      margin: 0 0 10px; letter-spacing: 0.03em;
+    }
+    .key-point {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--primary-light);
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin-bottom: 14px;
+      font-size: 0.95rem; font-weight: 600; color: var(--primary);
+      flex-shrink: 0;
+    }
+    .key-point::before {
+      content: "核心"; flex-shrink: 0;
+      background: var(--primary); color: #fff;
+      font-size: 0.72rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 4px;
+    }
+    .key-point.success { background: var(--success-bg); border-color: #a7f3d0; color: var(--success); }
+    .key-point.success::before { background: var(--success); content: "成果"; }
+    .subtitle { font-size: 1rem; color: var(--text-muted); margin-top: 12px; font-weight: 400; }
+    .school {
+      font-size: 0.9rem; color: var(--text-secondary);
+      background: var(--primary-light); display: inline-block;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .cover-center { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-left: 12px; }
+    .cover-title {
+      font-size: 2.5rem; font-weight: 800; line-height: 1.35;
+      color: var(--primary); margin-bottom: 4px;
+    }
+    .meta {
+      margin-top: 32px; display: grid;
+      grid-template-columns: repeat(2, auto); gap: 10px 40px;
+      font-size: 1rem;
+    }
+    .meta-item {
+      display: flex; gap: 8px; align-items: baseline;
+      color: var(--text-secondary);
+    }
+    .meta-item .label {
+      color: var(--text-muted); font-size: 0.85rem; min-width: 4.5em;
+    }
+    .meta-item .value { font-weight: 600; color: var(--text); }
+    .meta-item.highlight .value { color: var(--primary); font-size: 1.05rem; }
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; min-height: 0; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card-primary {
+      border-left: 4px solid var(--primary);
+      background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+    }
+    .card-secondary { background: #f8fafc; border-color: #e2e8f0; }
+    .card ul { list-style: none; font-size: 0.88rem; line-height: 1.7; color: var(--text-secondary); }
+    .card li { padding: 3px 0; padding-left: 0; }
+    .card li::before { content: ""; }
+    .card li strong, .card .primary-line {
+      color: var(--text); font-weight: 600;
+    }
+    .card .sub-line { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .tag {
+      font-size: 0.75rem; font-weight: 600; padding: 4px 10px;
+      border-radius: 6px; background: var(--primary-light); color: var(--primary);
+    }
+    .tag.warn { background: var(--warn-bg); color: var(--warn); }
+    .tag.ok { background: var(--success-bg); color: var(--success); }
+    .problem { color: var(--danger) !important; }
+    .problem::before { content: "· "; }
+    .highlight { color: var(--primary); font-weight: 700; }
+    .img-wrap {
+      flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
+      background: var(--surface); border-radius: 10px;
+      border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+      padding: 10px; overflow: hidden;
+    }
+    .img-wrap { cursor: zoom-in; position: relative; }
+    .img-wrap::after {
+      content: "点击放大";
+      position: absolute; right: 10px; bottom: 10px;
+      font-size: 0.7rem; font-weight: 600; color: #fff;
+      background: rgba(29, 78, 216, 0.85);
+      padding: 4px 10px; border-radius: 6px;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+    }
+    .img-wrap:hover::after { opacity: 1; }
+    .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(15, 23, 42, 0.88);
+      align-items: center; justify-content: center;
+      padding: 48px 24px 64px; cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative; max-width: 96vw; max-height: 90vh;
+      display: flex; flex-direction: column; align-items: center;
+      cursor: default;
+    }
+    .lightbox-inner img {
+      max-width: 96vw; max-height: calc(90vh - 48px);
+      object-fit: contain; border-radius: 8px;
+      background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .lightbox-caption {
+      margin-top: 12px; color: #e2e8f0; font-size: 0.9rem;
+      text-align: center; max-width: 90vw;
+    }
+    .lightbox-close {
+      position: fixed; top: 16px; right: 20px; z-index: 201;
+      width: 44px; height: 44px; border: none; border-radius: 50%;
+      background: rgba(255,255,255,0.95); color: var(--text);
+      font-size: 1.5rem; line-height: 1; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .lightbox-close:hover { background: #fff; color: var(--primary); }
+    .img-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; min-height: 0; }
+    .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .img-cell { display: flex; flex-direction: column; min-height: 0; }
+    .img-cell .img-wrap { flex: 1; }
+    .caption {
+      font-size: 0.78rem; color: var(--text-muted);
+      text-align: center; margin-top: 6px; line-height: 1.4;
+    }
+    .caption strong { color: var(--primary); font-weight: 700; }
+    .flow-row { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px; flex: 1; min-height: 0; }
+    .flow-label {
+      font-size: 0.72rem; font-weight: 700; color: #fff;
+      background: var(--primary); padding: 2px 8px;
+      border-radius: 4px; display: inline-block; margin-bottom: 6px;
+    }
+    .flow-label.sub { background: var(--accent); }
+    table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--surface); border-radius: 8px; overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: center; }
+    th { background: var(--primary); color: #fff; font-weight: 600; }
+    td { color: var(--text-secondary); }
+    tr td:last-child { color: var(--success); font-weight: 700; }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-box {
+      text-align: center; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 10px; box-shadow: var(--shadow-sm);
+    }
+    .stat-box.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, var(--primary-light) 0%, #fff 100%);
+      border-color: #93c5fd;
+    }
+    .stat-box .num {
+      font-size: 2rem; font-weight: 800; color: var(--primary); line-height: 1.2;
+    }
+    .stat-box.featured .num { font-size: 2.4rem; color: var(--success); }
+    .stat-box .label {
+      font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; line-height: 1.35;
+    }
+    .note {
+      font-size: 0.82rem; color: var(--text-muted);
+      margin-top: 12px; padding: 10px 12px;
+      background: #f1f5f9; border-radius: 8px; border-left: 3px solid var(--text-muted);
+    }
+    .thanks { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+    .thanks-item {
+      font-size: 1rem; line-height: 1.85; color: var(--text-secondary);
+      padding: 10px 16px; background: var(--surface);
+      border-radius: 8px; border: 1px solid var(--border);
+    }
+    .thanks-item .names { color: var(--primary); font-weight: 700; }
+    .thanks-closing {
+      margin-top: 20px; text-align: center;
+      font-size: 1.35rem; font-weight: 700; color: var(--primary);
+      padding: 16px; background: var(--primary-light);
+      border-radius: 12px; border: 2px solid #93c5fd;
+    }
+    .slide-num, .timer-hint {
+      position: absolute; bottom: 18px;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .slide-num { right: 28px; }
+    .timer-hint { left: 28px; }
+    .slide-debug-body {
+      display: grid; grid-template-columns: 1fr 0.95fr; gap: 16px;
+      flex: 1; min-height: 0;
+    }
+    .slide-debug-left { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+    .slide-debug-left .stats { margin-bottom: 10px; }
+    .slide-debug-left .stat-box { padding: 10px 8px; }
+    .slide-debug-left .stat-box .num { font-size: 1.5rem; }
+    .slide-debug-left .stat-box.featured .num { font-size: 1.85rem; }
+    .slide-debug-left table { font-size: 0.78rem; margin-top: 8px; }
+    .slide-debug-left th, .slide-debug-left td { padding: 6px 8px; }
+    .slide-debug-left .note { margin-top: 8px; font-size: 0.78rem; padding: 8px 10px; flex-shrink: 0; }
+    .demo-actions { display: flex; gap: 10px; margin-top: 10px; flex-shrink: 0; }
+    .demo-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 14px; border: none; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 700; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .demo-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+    .demo-btn.primary { background: var(--primary); color: #fff; }
+    .demo-btn.primary:hover { background: #1e40af; }
+    .demo-btn.secondary { background: var(--surface); color: var(--primary); border: 2px solid var(--primary); }
+    .demo-btn.secondary:hover { background: var(--primary-light); }
+    .demo-btn .icon { font-size: 1.1rem; }
+    .slide-debug-right { min-height: 0; display: flex; flex-direction: column; }
+    .slide-debug-right .img-wrap { flex: 1; }
+    .modal-panel {
+      display: none; position: fixed; inset: 0; z-index: 210;
+      background: rgba(15, 23, 42, 0.88);
+      align-items: center; justify-content: center;
+      padding: 40px 24px 56px;
+    }
+    .modal-panel.open { display: flex; }
+    .modal-panel-inner {
+      background: var(--surface); border-radius: 16px;
+      padding: 24px 28px 28px; max-width: 920px; width: 96vw;
+      max-height: 88vh; overflow: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    }
+    .modal-panel-inner h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 6px; }
+    .modal-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px; }
+    .avatar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .avatar-item {
+      text-align: center; cursor: zoom-in;
+      border-radius: 12px; overflow: hidden;
+      border: 2px solid var(--border); background: #f8fafc;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .avatar-item:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(29, 78, 216, 0.15);
+    }
+    .avatar-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+    .avatar-item span {
+      display: block; padding: 8px; font-size: 0.8rem;
+      font-weight: 600; color: var(--primary); background: var(--primary-light);
+    }
+    .video-box { text-align: center; min-height: 240px; }
+    .video-placeholder {
+      padding: 40px 24px; color: var(--text-muted);
+      border: 2px dashed var(--border); border-radius: 12px; width: 100%;
+      background: #f8fafc;
+    }
+    .video-placeholder .video-icon {
+      width: 72px; height: 72px; margin: 0 auto 16px;
+      border-radius: 50%; background: var(--primary-light);
+      color: var(--primary); font-size: 2rem; line-height: 72px;
+    }
+    .video-placeholder p { font-size: 1rem; font-weight: 600; color: var(--text-secondary); }
+    .video-hint {
+      font-size: 0.82rem !important; font-weight: 400 !important;
+      margin-top: 8px; color: var(--text-muted) !important;
+    }
+    #demo-video { width: 100%; max-height: 70vh; border-radius: 10px; background: #000; }
+    @media (max-width: 900px) {
+      .avatar-grid { grid-template-columns: repeat(2, 1fr); }
+      .slide-debug-body { grid-template-columns: 1fr; }
+    }
+    .nav {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 50px;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center; gap: 16px; z-index: 100;
+      border-top: 1px solid var(--border); box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    }
+    .nav button {
+      background: var(--primary); color: #fff; border: none;
+      padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600;
+    }
+    .nav button:hover { background: #1e40af; }
+    .nav button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    .dots { display: flex; gap: 6px; }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #cbd5e1; cursor: pointer; transition: all 0.2s;
+    }
+    .dot.active { background: var(--primary); transform: scale(1.25); }
+    .full-btn {
+      background: var(--surface) !important; color: var(--text-secondary) !important;
+      border: 1px solid var(--border) !important;
+    }
+    @media (max-width: 1100px) {
+      .slide { padding: 28px 24px 60px; }
+      .cover-title, h1 { font-size: 1.75rem; }
+      .content-grid, .flow-row, .img-grid-2, .img-grid-3 { grid-template-columns: 1fr; }
+      .meta { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 <div class="deck" id="deck">
 
   <!-- 第1页：封面 -->
-  <section class="slide slide-cover active" data-time="40">
+  <section class="slide active" data-time="40">
     <div class="cover-center">
-      <p class="school reveal">南京工业大学 · 2026届本科毕业设计答辩</p>
-      <h1 class="cover-title reveal" data-delay="1">基于AI人脸识别技术的<br>智能电子猫眼设计</h1>
-      <div class="cover-deco reveal" data-delay="2" aria-hidden="true"></div>
-      <p class="subtitle reveal" data-delay="2">STM32 + K210(YOLOv2) · 环境安防联动 · OneNet 云平台</p>
-      <div class="meta reveal" data-delay="3">
+      <p class="school">南京工业大学 · 2026届本科毕业设计答辩</p>
+      <h1 class="cover-title">基于AI人脸识别技术的<br>智能电子猫眼设计</h1>
+      <p class="subtitle">STM32 + K210(YOLOv2) · 环境安防联动 · OneNet 云平台</p>
+      <div class="meta">
         <div class="meta-item highlight"><span class="label">答辩人</span><span class="value">戴信羽</span></div>
         <div class="meta-item"><span class="label">指导老师</span><span class="value">朱晓梅</span></div>
         <div class="meta-item"><span class="label">专　业</span><span class="value">电子信息工程</span></div>
@@ -28,42 +376,39 @@
   </section>
 
   <!-- 第2页 -->
-  <section class="slide slide-bg" data-time="45">
-    <div class="slide-header reveal">
+  <section class="slide" data-time="45">
+    <div class="slide-header">
       <h2>研究内容 · 背景及问题</h2>
-      <p class="key-point">从传统「录像猫眼」升级为 AI「识别猫眼」，实现访客鉴别 + 环境安防 + 远程联控</p>
+      <p class="key-point">从传统“录像猫眼”升级为 AI“识别猫眼”，实现访客鉴别 + 环境安防 + 远程联控</p>
     </div>
     <div class="content-grid">
-      <div class="card card-primary reveal" data-delay="1">
+      <div class="card card-primary">
         <div class="tag-row">
           <span class="tag">研究背景</span>
-          <span class="tag ok">研究内容</span>
+          <span class="tag ok">主要工作</span>
         </div>
         <h3>背景与主要研究内容</h3>
-        <ul class="list-check">
+        <ul>
           <li class="primary-line">痛点：传统猫眼视野窄、无法<span class="highlight">主动识别</span>访客身份</li>
-          <li class="primary-line">方向：由<span class="highlight">「录像」→「识别」</span>，差异化响应熟人/陌生人</li>
+          <li class="primary-line">方向：由<span class="highlight">“录像”→“识别”</span>，差异化响应熟人/陌生人</li>
           <li class="sub-line">双芯片：STM32F103C8T6 主控 + K210（YOLOv2）协处理</li>
           <li class="sub-line">传感联动：DHT11 / MQ-2 / 火焰传感器 + ISD1820 语音</li>
           <li class="sub-line">物联：ESP8266 + MQTT → OneNet + 手机 APP</li>
         </ul>
       </div>
-      <div class="card card-secondary reveal" data-delay="2">
+      <div class="card card-secondary">
         <div class="tag-row">
-          <span class="tag danger">痛点</span>
           <span class="tag warn">待解决问题</span>
           <span class="tag ok">设计目标</span>
         </div>
         <h3>问题与目标</h3>
-        <ul class="list-problem">
-          <li>嵌入式资源受限下的精度与功耗平衡</li>
-          <li>单一监控无法覆盖火灾等室内风险</li>
+        <ul>
+          <li class="problem">嵌入式资源受限下的精度与功耗平衡</li>
+          <li class="problem">单一监控无法覆盖火灾等室内风险</li>
+          <li class="primary-line" style="margin-top:10px;color:var(--success);">目标① 人脸识别准确率 <span class="highlight">≥ 98%</span></li>
+          <li class="primary-line" style="color:var(--success);">目标② 异常报警触发率 <span class="highlight">100%</span></li>
+          <li class="sub-line">构建“感知—决策—执行—云端”闭环安防</li>
         </ul>
-        <ul class="list-num" style="margin-top:12px;">
-          <li class="primary-line">人脸识别准确率 <span class="highlight">≥ 98%</span></li>
-          <li class="primary-line">异常报警触发率 <span class="highlight">100%</span></li>
-        </ul>
-        <p class="sub-line" style="margin-top:10px;color:var(--text-muted);font-size:0.82rem;">构建「感知—决策—执行—云端」闭环安防</p>
       </div>
     </div>
     <span class="timer-hint">建议 45 秒</span>
@@ -71,51 +416,51 @@
   </section>
 
   <!-- 第3页 -->
-  <section class="slide slide-diagram" data-time="40">
-    <div class="slide-header reveal">
+  <section class="slide" data-time="40">
+    <div class="slide-header">
       <h2>系统总体框图</h2>
       <p class="key-point">STM32 主控统一调度：感知层（K210+传感）→ 执行层（OLED/语音/报警）→ 远程层（ESP8266→云）</p>
     </div>
-    <div class="img-wrap corner-frame reveal" data-delay="1" style="flex:1;">
+    <div class="img-wrap" style="flex:1;">
       <img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image5.png" alt="图2-1 智能电子猫眼整体设计框图">
     </div>
-    <p class="caption reveal" data-delay="2"><strong>图2-1</strong> 整体设计框图 · 自动/手动双模式 · 本地交互 + 云平台远程监控</p>
+    <p class="caption"><strong>图2-1</strong> 整体设计框图 · 自动/手动双模式 · 本地交互 + 云平台远程监控</p>
     <span class="timer-hint">建议 40 秒</span>
     <span class="slide-num">3 / 8</span>
   </section>
 
   <!-- 第4页 -->
-  <section class="slide slide-diagram" data-time="50">
-    <div class="slide-header reveal">
+  <section class="slide" data-time="50">
+    <div class="slide-header">
       <h2>硬件设计总图</h2>
       <p class="key-point">模块化硬件：USART1↔K210 · USART2↔ESP8266 · ADC采集火焰/烟雾 · I2C双OLED · PWM舵机开门</p>
     </div>
-    <div class="img-grid-2 reveal" data-delay="1" style="flex:1; min-height:0;">
+    <div class="img-grid-2" style="flex:1; min-height:0;">
       <div class="img-cell">
         <span class="flow-label">主图 · 系统原理</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image21.png" alt="系统原理图"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image21.png" alt="系统原理图"></div>
         <p class="caption"><strong>图3-17</strong> 系统整体原理图</p>
       </div>
       <div class="img-cell">
         <span class="flow-label">主控 · 最小系统</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image7.jpeg" alt="STM32最小系统"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image7.jpeg" alt="STM32最小系统"></div>
         <p class="caption"><strong>图3-2</strong> STM32 最小系统电路</p>
       </div>
     </div>
-    <div class="img-grid-3 reveal" data-delay="2" style="margin-top:10px; max-height:30%;">
+    <div class="img-grid-3" style="margin-top:10px; max-height:30%;">
       <div class="img-cell">
         <span class="flow-label sub">传感</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image11.png" alt="传感器"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image11.png" alt="传感器"></div>
         <p class="caption">火焰 <strong>PA1</strong> / 烟雾 <strong>PB1</strong></p>
       </div>
       <div class="img-cell">
         <span class="flow-label sub">通信</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image20.png" alt="ESP8266"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image20.png" alt="ESP8266"></div>
         <p class="caption">WiFi <strong>PA2/PA3</strong></p>
       </div>
       <div class="img-cell">
         <span class="flow-label sub">实物</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image6.png" alt="STM32"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image6.png" alt="STM32"></div>
         <p class="caption">主控模块实物</p>
       </div>
     </div>
@@ -124,25 +469,25 @@
   </section>
 
   <!-- 第5页 -->
-  <section class="slide slide-diagram" data-time="50">
-    <div class="slide-header reveal">
+  <section class="slide" data-time="50">
+    <div class="slide-header">
       <h2>软件设计总图</h2>
       <p class="key-point">主循环：环境采集→阈值判断→K210人脸检测→身份联动 → MQTT 远程指令解析</p>
     </div>
-    <div class="flow-row reveal" data-delay="1">
+    <div class="flow-row">
       <div class="img-cell">
         <span class="flow-label">主函数流程 · 图4-1</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image22.png" alt="系统主流程"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image22.png" alt="系统主流程"></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:10px; min-height:0;">
         <div class="img-cell" style="flex:1;">
           <span class="flow-label sub">子函数 · 图4-2</span>
-          <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image24.png" alt="人脸识别"></div>
+          <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image24.png" alt="人脸识别"></div>
           <p class="caption">YOLOv2 检测 + MobileFaceNet 比对 → 串口回传 STM32</p>
         </div>
         <div class="img-cell" style="flex:1;">
           <span class="flow-label sub">子函数 · 图4-3</span>
-          <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image25.png" alt="报警流程"></div>
+          <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image25.png" alt="报警流程"></div>
           <p class="caption">熟人开门 / 陌生人声光+语音+上云告警</p>
         </div>
       </div>
@@ -152,20 +497,20 @@
   </section>
 
   <!-- 第6页 -->
-  <section class="slide slide-product" data-time="40">
-    <div class="slide-header reveal">
+  <section class="slide" data-time="40">
+    <div class="slide-header">
       <h2>系统实物图</h2>
       <p class="key-point">Altium 双层 PCB 设计 → 焊接联调 → 各模块紧凑集成于单板上电运行</p>
     </div>
-    <div class="img-grid-2 reveal" data-delay="1" style="flex:1;">
+    <div class="img-grid-2" style="flex:1;">
       <div class="img-cell">
         <span class="flow-label">PCB 设计</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image28.png" alt="PCB"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image28.png" alt="PCB"></div>
         <p class="caption"><strong>图5-1</strong> PCB 三维示意图</p>
       </div>
       <div class="img-cell">
         <span class="flow-label">整机实物</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image29.png" alt="实物"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image29.png" alt="实物"></div>
         <p class="caption"><strong>图5-2</strong> 焊接完成系统实物（OLED 实时显示环境数据）</p>
       </div>
     </div>
@@ -174,13 +519,13 @@
   </section>
 
   <!-- 第7页 -->
-  <section class="slide slide-debug" data-time="45">
-    <div class="slide-header reveal">
+  <section class="slide" data-time="45">
+    <div class="slide-header">
       <h2>调试结果</h2>
       <p class="key-point success">核心指标达标：识别准确率 98.0% · 单次耗时 34.2ms · 超阈值报警 100% 触发</p>
     </div>
     <div class="slide-debug-body">
-      <div class="slide-debug-left reveal" data-delay="1">
+      <div class="slide-debug-left">
         <div class="stats">
           <div class="stat-box featured">
             <div class="num">98.0%</div>
@@ -215,9 +560,9 @@
         </div>
         <p class="note">联调逻辑：已知人脸→语音+开门；陌生人→仅播报；环境异常→声光报警+MQTT 上报</p>
       </div>
-      <div class="slide-debug-right img-cell reveal" data-delay="2">
+      <div class="slide-debug-right img-cell">
         <span class="flow-label">云平台验证</span>
-        <div class="img-wrap corner-frame"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image27.jpeg" alt="APP"></div>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image27.jpeg" alt="APP"></div>
         <p class="caption"><strong>OneNet APP</strong> 实时监测 · 远程开门 · 阈值在线设置</p>
       </div>
     </div>
@@ -226,17 +571,17 @@
   </section>
 
   <!-- 第8页 -->
-  <section class="slide slide-thanks" data-time="30">
-    <div class="thanks-hero reveal">
-      <h1 class="thanks-title">谢谢聆听</h1>
-      <p class="thanks-subtitle breathe">恳请批评指正</p>
+  <section class="slide" data-time="30">
+    <div class="slide-header">
+      <h2>致　谢</h2>
+      <p class="key-point">感谢各位老师在毕业设计全过程中的指导与帮助</p>
     </div>
-    <div class="thanks-grid reveal" data-delay="2">
+    <div class="thanks">
       <p class="thanks-item">导师 <span class="names">朱晓梅</span> 老师 — 论文选题、硬件修改与撰写定稿的悉心指导</p>
       <p class="thanks-item">辅导员 <span class="names">秦海燕</span> 老师 — 学习与生活上的关心与支持</p>
       <p class="thanks-item">父母与家人 — 一直以来的默默支持与鼓励</p>
       <p class="thanks-item">同学与挚友 — 毕业设计期间的陪伴与帮助</p>
-      <p class="thanks-closing">感谢各位老师在毕业设计全过程中的指导与帮助</p>
+      <p class="thanks-closing">感谢各位老师聆听，恳请批评指正！</p>
     </div>
     <span class="timer-hint">建议 30 秒 · 全篇约 5 分钟</span>
     <span class="slide-num">8 / 8</span>
@@ -244,7 +589,6 @@
 
 </div>
 
-<!-- 灯箱 -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <button class="lightbox-close" id="lightbox-close" type="button" title="关闭 (Esc)">×</button>
   <div class="lightbox-inner" id="lightbox-inner">
@@ -271,34 +615,180 @@
       <div class="video-placeholder" id="video-placeholder">
         <div class="video-icon">▶</div>
         <p>演示视频待补充</p>
-        <p class="video-hint">上传 demo.mp4 至 ppt_assets 后，在 deck.js 中设置 DEMO_VIDEO_URL 即可自动播放</p>
+        <p class="video-hint">上传 demo.mp4 至 ppt_assets 后，在 index.html 中设置 DEMO_VIDEO_URL 即可自动播放</p>
       </div>
       <video id="demo-video" controls playsinline style="display:none;"></video>
     </div>
   </div>
 </div>
 
-<!-- 导航 -->
-<nav class="deck-nav" aria-label="幻灯片导航">
-  <button type="button" class="nav-side nav-prev" id="nav-prev" aria-label="上一页" disabled>‹</button>
-  <button type="button" class="nav-side nav-next" id="nav-next" aria-label="下一页">›</button>
-  <div class="nav-bottom">
-    <div class="nav-progress-track" aria-hidden="true">
-      <div class="nav-progress-fill" id="nav-progress-fill"></div>
-    </div>
-    <div class="nav-meta">
-      <span class="nav-page" id="nav-page">1 / 8</span>
-      <div class="nav-dots" id="nav-dots" role="tablist" aria-label="页码"></div>
-      <span>← → 翻页 · 空格下一页</span>
-    </div>
-  </div>
+<nav class="nav">
+  <button id="prev" disabled>← 上一页</button>
+  <div class="dots" id="dots"></div>
+  <button id="next">下一页 →</button>
+  <button class="full-btn" id="fullscreen">全屏</button>
 </nav>
 
-<div class="nav-tools">
-  <button type="button" class="nav-tool-btn" id="theme-toggle" title="切换主题">浅色</button>
-  <button type="button" class="nav-tool-btn" id="fullscreen" title="全屏 (F11)">全屏</button>
-</div>
+<script>
+  const ASSET_BASE = 'https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/';
+  const AVATARS = [
+    { src: ASSET_BASE + 'avatar2.png', label: '测试样本 1' },
+    { src: ASSET_BASE + 'avatar3.png', label: '测试样本 2' },
+    { src: ASSET_BASE + 'avatar4.png', label: '测试样本 3' },
+  ];
+  const DEMO_VIDEO_URL = '';
 
-<script src="deck.js"></script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const dotsEl = document.getElementById('dots');
+  let cur = 0;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.title = `第 ${i + 1} 页`;
+    d.onclick = () => go(i);
+    dotsEl.appendChild(d);
+  });
+
+  function go(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('active');
+    cur = n;
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('active');
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('next').disabled = cur === slides.length - 1;
+  }
+
+  document.getElementById('prev').onclick = () => go(cur - 1);
+  document.getElementById('next').onclick = () => go(cur + 1);
+  document.getElementById('fullscreen').onclick = () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  };
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxInner = document.getElementById('lightbox-inner');
+  const avatarModal = document.getElementById('avatar-modal');
+  const videoModal = document.getElementById('video-modal');
+  const avatarGrid = document.getElementById('avatar-grid');
+  const demoVideo = document.getElementById('demo-video');
+  const videoPlaceholder = document.getElementById('video-placeholder');
+
+  function getCaption(img) {
+    const cell = img.closest('.img-cell');
+    if (cell) {
+      const c = cell.querySelector('.caption');
+      if (c) return c.textContent.trim();
+    }
+    const wrap = img.closest('.img-wrap');
+    const next = wrap?.nextElementSibling;
+    if (next?.classList.contains('caption')) return next.textContent.trim();
+    const slideCap = img.closest('.slide')?.querySelector('.caption');
+    return slideCap ? slideCap.textContent.trim() : (img.alt || '');
+  }
+
+  function openLightbox(img, captionText) {
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = captionText || getCaption(img);
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxImg.src = '';
+    if (!avatarModal.classList.contains('open') && !videoModal.classList.contains('open')) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  document.querySelectorAll('.img-wrap').forEach(wrap => {
+    wrap.addEventListener('click', e => {
+      const img = wrap.querySelector('img');
+      if (img?.src) { e.stopPropagation(); openLightbox(img); }
+    });
+  });
+
+  document.getElementById('lightbox-close').onclick = closeLightbox;
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  lightboxInner.addEventListener('click', e => e.stopPropagation());
+
+  AVATARS.forEach(a => {
+    const item = document.createElement('div');
+    item.className = 'avatar-item';
+    item.innerHTML = `<img src="${a.src}" alt="${a.label}"><span>${a.label}</span>`;
+    const img = item.querySelector('img');
+    img.addEventListener('click', e => {
+      e.stopPropagation();
+      openLightbox(img, a.label + ' · 现场测试头像');
+    });
+    avatarGrid.appendChild(item);
+  });
+
+  function openModal(el) {
+    el.classList.add('open');
+    el.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(el) {
+    el.classList.remove('open');
+    el.setAttribute('aria-hidden', 'true');
+    if (el === videoModal) demoVideo.pause();
+    if (!lightbox.classList.contains('open') && !avatarModal.classList.contains('open') && !videoModal.classList.contains('open')) {
+      document.body.style.overflow = '';
+    }
+  }
+  function anyOverlayOpen() {
+    return lightbox.classList.contains('open') ||
+      avatarModal.classList.contains('open') || videoModal.classList.contains('open');
+  }
+
+  document.getElementById('btn-avatars').onclick = () => openModal(avatarModal);
+  document.getElementById('btn-video').onclick = () => {
+    openModal(videoModal);
+    if (DEMO_VIDEO_URL) {
+      demoVideo.src = DEMO_VIDEO_URL;
+      demoVideo.style.display = 'block';
+      videoPlaceholder.style.display = 'none';
+    }
+  };
+
+  avatarModal.addEventListener('click', e => { if (e.target === avatarModal) closeModal(avatarModal); });
+  videoModal.addEventListener('click', e => { if (e.target === videoModal) closeModal(videoModal); });
+  document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.onclick = () => closeModal(document.getElementById(btn.dataset.close));
+  });
+
+  if (DEMO_VIDEO_URL) {
+    demoVideo.src = DEMO_VIDEO_URL;
+    demoVideo.style.display = 'block';
+    videoPlaceholder.style.display = 'none';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (anyOverlayOpen()) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        if (lightbox.classList.contains('open')) closeLightbox();
+        else if (avatarModal.classList.contains('open')) closeModal(avatarModal);
+        else if (videoModal.classList.contains('open')) closeModal(videoModal);
+      }
+      return;
+    }
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+</script>
 </body>
 </html>
