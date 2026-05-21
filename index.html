@@ -133,6 +133,311 @@
     .problem { color: var(--danger) !important; }
     .problem::before { content: "· "; }
     .highlight { color: var(--primary); font-weight: 700; }
+    .slide-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .tech-split {
+      display: grid; grid-template-columns: 0.42fr 0.58fr; gap: 16px;
+      flex: 1; min-height: 0; align-items: stretch;
+    }
+    .tech-img-col { display: flex; flex-direction: column; min-height: 0; }
+    .tech-img-col .img-wrap { flex: 1; min-height: 0; }
+    .tech-img-col.sm .img-wrap img { max-height: 100%; object-fit: contain; }
+    .tech-text-spread {
+      display: grid !important;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 12px;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .tech-text-spread .tech-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
+      height: 100%;
+    }
+    .tech-img-col.xs .img-wrap { height: 88px; flex: none; }
+    .tech-text-col { display: flex; flex-direction: column; gap: 9px; overflow-y: auto; }
+    .tech-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 4px solid var(--primary); border-radius: 10px;
+      padding: 11px 13px; box-shadow: var(--shadow-sm); flex-shrink: 0;
+    }
+    .tech-block.accent { border-left-color: var(--accent); }
+    .tech-block.warn { border-left-color: var(--warn); }
+    .tech-block h4 {
+      font-size: 0.86rem; font-weight: 700; color: var(--primary);
+      margin-bottom: 5px;
+    }
+    .tech-block p { font-size: 0.78rem; line-height: 1.62; color: var(--text-secondary); }
+    .tech-block ul { list-style: none; margin-top: 4px; }
+    .tech-block li {
+      font-size: 0.76rem; line-height: 1.55; color: var(--text-secondary);
+      padding: 2px 0;
+    }
+    .tech-block li::before { content: "▹ "; color: var(--primary); font-weight: 700; }
+    .tech-metrics { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+    .tech-metric {
+      font-size: 0.68rem; font-weight: 700; padding: 2px 7px;
+      background: var(--primary-light); color: var(--primary); border-radius: 4px;
+    }
+    .tech-metric.ok { background: var(--success-bg); color: var(--success); }
+    .tech-hw-five {
+      flex: 1; min-height: 0;
+      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 12px;
+    }
+    .hw-col {
+      display: flex; flex-direction: column; gap: 8px;
+      min-height: 0; min-width: 0;
+    }
+    .hw-col-left .hw-tile { flex: 1; min-height: 0; }
+    .hw-unified {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm);
+    }
+    .hw-unified-body {
+      flex: 1; min-height: 0;
+      display: grid; grid-template-columns: 0.48fr 0.52fr;
+    }
+    .hw-unified-img {
+      display: flex; flex-direction: column; min-height: 0;
+      border-right: 1px solid var(--border); background: #f8fafc;
+    }
+    .hw-unified-img .hw-mini-label {
+      flex-shrink: 0; font-size: 0.68rem; font-weight: 700; color: #fff;
+      background: var(--accent); padding: 3px 8px;
+    }
+    .hw-unified-img .img-wrap {
+      flex: 1; min-height: 0; border: none; border-radius: 0;
+      padding: 4px 6px; background: transparent;
+    }
+    .hw-unified-img .caption {
+      flex-shrink: 0; margin: 0; padding: 3px 8px;
+      font-size: 0.65rem; background: #fff;
+      border-top: 1px solid var(--border);
+    }
+    .hw-unified-text {
+      min-height: 0; padding: 8px 10px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 3px solid var(--primary);
+    }
+    .hw-unified.accent .hw-unified-text { border-left-color: var(--accent); }
+    .hw-unified.warn .hw-unified-text { border-left-color: var(--warn); }
+    .hw-unified-text h4 { font-size: 0.78rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+    .hw-unified.accent .hw-unified-text h4 { color: var(--accent); }
+    .hw-unified.warn .hw-unified-text h4 { color: var(--warn); }
+    .hw-unified-text p { font-size: 0.7rem; line-height: 1.52; color: var(--text-secondary); }
+    .hw-tile {
+      display: flex; flex-direction: column; min-height: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm);
+    }
+    .hw-tile-label {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 700; color: #fff;
+      background: var(--primary); padding: 4px 10px;
+    }
+    .hw-tile-label.sub { background: var(--accent); }
+    .hw-tile .img-wrap {
+      flex: 1; min-height: 0; border: none; border-radius: 0; padding: 6px;
+    }
+    .hw-tile .caption {
+      flex-shrink: 0; margin: 0; padding: 4px 8px;
+      background: #f8fafc; border-top: 1px solid var(--border);
+      font-size: 0.68rem;
+    }
+    .tech-soft-split {
+      flex: 1; min-height: 0;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .soft-col {
+      display: flex; flex-direction: column; gap: 8px;
+      min-height: 0; min-width: 0;
+    }
+    .soft-col-left .soft-card { flex: 1; }
+    .soft-col-right .soft-card { flex: 1; }
+    .soft-card {
+      display: flex; flex-direction: column; min-height: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm);
+    }
+    .soft-card-label {
+      flex-shrink: 0; font-size: 0.68rem; font-weight: 700; color: #fff;
+      background: var(--primary); padding: 4px 10px;
+    }
+    .soft-card.accent .soft-card-label { background: var(--accent); }
+    .soft-card.warn .soft-card-label { background: var(--warn); }
+    .soft-card-body {
+      flex: 1; min-height: 0;
+      display: grid; grid-template-columns: 0.44fr 0.56fr;
+    }
+    .soft-col-left .soft-card-body { grid-template-columns: 0.48fr 0.52fr; }
+    .soft-card-body .img-wrap {
+      min-height: 0; border: none; border-radius: 0;
+      padding: 8px 10px; background: #f8fafc;
+      border-right: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .soft-card-body .img-wrap img {
+      width: 100%; height: 100%; max-height: 100%; object-fit: contain;
+    }
+    .soft-embed {
+      min-height: 0; padding: 10px 12px;
+      background: #f8fafc;
+      border-left: 3px solid var(--primary);
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 5px; overflow: hidden;
+    }
+    .soft-card.accent .soft-embed { border-left-color: var(--accent); }
+    .soft-card.warn .soft-embed { border-left-color: var(--warn); }
+    .soft-embed-title {
+      font-size: 0.82rem; font-weight: 700; color: var(--primary);
+      margin-bottom: 2px; line-height: 1.3;
+    }
+    .soft-card.accent .soft-embed-title { color: var(--accent); }
+    .soft-card.warn .soft-embed-title { color: var(--warn); }
+    .soft-embed-mono {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.7rem; line-height: 1.5; color: #475569;
+      white-space: normal; word-break: break-word;
+    }
+    .soft-embed-mono .kw { color: var(--primary); font-weight: 600; }
+    .soft-card.accent .soft-embed-mono .kw { color: var(--accent); }
+    .soft-embed p, .soft-embed li {
+      font-size: 0.72rem; line-height: 1.52; color: var(--text-secondary);
+      white-space: normal; word-break: break-word;
+    }
+    .soft-embed ul { list-style: none; margin: 2px 0 0; padding: 0; }
+    .soft-embed li { margin-bottom: 4px; }
+    .soft-embed li::before { content: "▹ "; color: var(--primary); font-weight: 700; }
+    .soft-card.accent .soft-embed li::before { color: var(--accent); }
+    .pseudo-code {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.7rem; line-height: 1.5; color: #334155;
+      background: #f1f5f9; border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 10px; margin-top: 5px;
+    }
+    .pseudo-code .kw { color: var(--primary); font-weight: 600; }
+    .tech-proto-split {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .proto-unified {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm);
+    }
+    .proto-unified-body {
+      flex: 1; min-height: 0;
+      display: grid; grid-template-columns: 0.54fr 0.46fr;
+    }
+    .proto-img {
+      display: flex; flex-direction: column; min-height: 0;
+      border-right: 1px solid var(--border); background: #f8fafc;
+    }
+    .proto-img .proto-label {
+      flex-shrink: 0; font-size: 0.68rem; font-weight: 700; color: #fff;
+      background: var(--primary); padding: 4px 10px;
+    }
+    .proto-unified.accent .proto-label { background: var(--accent); }
+    .proto-img .img-wrap {
+      flex: 1; min-height: 0; border: none; border-radius: 0;
+      padding: 8px 10px; background: transparent;
+    }
+    .proto-img .img-wrap img {
+      width: 100%; height: 100%; object-fit: contain;
+    }
+    .proto-embed {
+      min-height: 0; padding: 10px 12px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 3px solid var(--primary);
+    }
+    .proto-unified.accent .proto-embed { border-left-color: var(--accent); }
+    .proto-embed h4 { font-size: 0.8rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .proto-unified.accent .proto-embed h4 { color: var(--accent); }
+    .proto-embed p { font-size: 0.72rem; line-height: 1.55; color: var(--text-secondary); }
+    .proto-embed ul { list-style: none; margin: 0; }
+    .proto-embed li {
+      font-size: 0.7rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .proto-embed li::before { content: "▹ "; color: var(--primary); font-weight: 700; }
+    .proto-unified.accent .proto-embed li::before { color: var(--accent); }
+    .proto-embed .tech-metrics { margin-top: 6px; }
+    .proto-embed .proto-sub {
+      margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border);
+    }
+    .proto-embed .proto-sub h4 { font-size: 0.74rem; color: var(--warn); margin-bottom: 4px; }
+    .tech-test-layout {
+      display: grid; grid-template-columns: 0.56fr 0.44fr; gap: 10px;
+      flex: 1; min-height: 0; align-items: stretch;
+    }
+    .dashboard {
+      display: flex; flex-direction: column; gap: 8px;
+      min-height: 0; overflow: hidden;
+    }
+    .dash-section {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px 12px; box-shadow: var(--shadow-sm);
+    }
+    .dash-section h4 {
+      flex-shrink: 0;
+      font-size: 0.78rem; font-weight: 700; color: var(--primary);
+      margin-bottom: 6px; padding-bottom: 4px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+    .dash-grid {
+      flex: 1; min-height: 0;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+      align-content: center;
+    }
+    .dash-kpi {
+      text-align: center; padding: 6px 4px;
+      background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+    .dash-kpi .val { font-size: 1.05rem; font-weight: 800; color: var(--primary); line-height: 1.2; }
+    .dash-kpi .val.green { color: var(--success); }
+    .dash-kpi .lbl { font-size: 0.62rem; color: var(--text-muted); margin-top: 2px; line-height: 1.2; }
+    .dash-foot {
+      flex-shrink: 0; font-size: 0.66rem; color: var(--text-muted); margin-top: 5px; line-height: 1.35;
+    }
+    .dash-side {
+      display: flex; flex-direction: column; min-height: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm);
+    }
+    .test-side-head {
+      flex-shrink: 0; font-size: 0.68rem; font-weight: 700; color: #fff;
+      background: var(--primary); padding: 4px 10px;
+    }
+    .dash-side .img-wrap {
+      flex: 1; min-height: 0; border: none; border-radius: 0;
+      box-shadow: none; padding: 8px 10px; background: #f8fafc;
+    }
+    .dash-side .img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+    .dash-side .caption {
+      flex-shrink: 0; margin: 0; padding: 5px 10px;
+      font-size: 0.66rem; text-align: center;
+      background: #f8fafc; border-top: 1px solid var(--border);
+    }
+    .dash-side .demo-actions {
+      flex-shrink: 0; margin: 0; padding: 8px 10px;
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+    .dash-side .demo-btn { font-size: 0.72rem; padding: 8px 6px; }
+    @media (max-width: 1100px) {
+      .tech-split, .tech-test-layout, .tech-hw-five, .hw-unified-body, .tech-soft-split, .proto-unified-body, .soft-card-body {
+        grid-template-columns: 1fr;
+      }
+      .soft-card-body .img-wrap { border-right: none; border-bottom: 1px solid var(--border); }
+      .soft-embed { border-left: none; border-top: 3px solid var(--primary); }
+      .dash-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     .img-wrap {
       flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
       background: var(--surface); border-radius: 10px;
@@ -304,26 +609,34 @@
       display: block; padding: 8px; font-size: 0.8rem;
       font-weight: 600; color: var(--primary); background: var(--primary-light);
     }
-    .video-box { text-align: center; min-height: 240px; }
-    .video-placeholder {
-      padding: 40px 24px; color: var(--text-muted);
-      border: 2px dashed var(--border); border-radius: 12px; width: 100%;
-      background: #f8fafc;
+    .video-player-wrap {
+      display: flex; align-items: center; gap: 12px;
     }
-    .video-placeholder .video-icon {
-      width: 72px; height: 72px; margin: 0 auto 16px;
-      border-radius: 50%; background: var(--primary-light);
-      color: var(--primary); font-size: 2rem; line-height: 72px;
+    .video-nav-btn {
+      flex-shrink: 0; width: 48px; height: 48px;
+      border: 2px solid var(--primary); border-radius: 50%;
+      background: var(--surface); color: var(--primary);
+      font-size: 1.6rem; line-height: 1; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
     }
-    .video-placeholder p { font-size: 1rem; font-weight: 600; color: var(--text-secondary); }
-    .video-hint {
-      font-size: 0.82rem !important; font-weight: 400 !important;
-      margin-top: 8px; color: var(--text-muted) !important;
+    .video-nav-btn:hover { background: var(--primary); color: #fff; }
+    .video-main { flex: 1; min-width: 0; text-align: center; }
+    .video-label {
+      font-size: 0.95rem; font-weight: 700; color: var(--primary);
+      margin-bottom: 10px; text-align: center;
     }
-    #demo-video { width: 100%; max-height: 70vh; border-radius: 10px; background: #000; }
+    .demo-video {
+      width: 100%; max-height: 58vh; border-radius: 10px;
+      background: #000; display: block;
+    }
+    .video-counter {
+      margin-top: 10px; font-size: 0.82rem; color: var(--text-muted);
+    }
+    #video-modal .modal-panel-inner { max-width: 820px; }
     @media (max-width: 900px) {
       .avatar-grid { grid-template-columns: repeat(2, 1fr); }
       .slide-debug-body { grid-template-columns: 1fr; }
+      .video-nav-btn { width: 40px; height: 40px; font-size: 1.3rem; }
     }
     .nav {
       position: fixed; bottom: 0; left: 0; right: 0; height: 50px;
@@ -415,158 +728,294 @@
     <span class="slide-num">2 / 8</span>
   </section>
 
-  <!-- 第3页 -->
-  <section class="slide" data-time="40">
-    <div class="slide-header">
-      <h2>系统总体框图</h2>
-      <p class="key-point">STM32 主控统一调度：感知层（K210+传感）→ 执行层（OLED/语音/报警）→ 远程层（ESP8266→云）</p>
-    </div>
-    <div class="img-wrap" style="flex:1;">
-      <img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image5.png" alt="图2-1 智能电子猫眼整体设计框图">
-    </div>
-    <p class="caption"><strong>图2-1</strong> 整体设计框图 · 自动/手动双模式 · 本地交互 + 云平台远程监控</p>
-    <span class="timer-hint">建议 40 秒</span>
-    <span class="slide-num">3 / 8</span>
-  </section>
-
-  <!-- 第4页 -->
-  <section class="slide" data-time="50">
-    <div class="slide-header">
-      <h2>硬件设计总图</h2>
-      <p class="key-point">模块化硬件：USART1↔K210 · USART2↔ESP8266 · ADC采集火焰/烟雾 · I2C双OLED · PWM舵机开门</p>
-    </div>
-    <div class="img-grid-2" style="flex:1; min-height:0;">
-      <div class="img-cell">
-        <span class="flow-label">主图 · 系统原理</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image21.png" alt="系统原理图"></div>
-        <p class="caption"><strong>图3-17</strong> 系统整体原理图</p>
-      </div>
-      <div class="img-cell">
-        <span class="flow-label">主控 · 最小系统</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image7.jpeg" alt="STM32最小系统"></div>
-        <p class="caption"><strong>图3-2</strong> STM32 最小系统电路</p>
-      </div>
-    </div>
-    <div class="img-grid-3" style="margin-top:10px; max-height:30%;">
-      <div class="img-cell">
-        <span class="flow-label sub">传感</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image11.png" alt="传感器"></div>
-        <p class="caption">火焰 <strong>PA1</strong> / 烟雾 <strong>PB1</strong></p>
-      </div>
-      <div class="img-cell">
-        <span class="flow-label sub">通信</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image20.png" alt="ESP8266"></div>
-        <p class="caption">WiFi <strong>PA2/PA3</strong></p>
-      </div>
-      <div class="img-cell">
-        <span class="flow-label sub">实物</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image6.png" alt="STM32"></div>
-        <p class="caption">主控模块实物</p>
-      </div>
-    </div>
-    <span class="timer-hint">建议 50 秒</span>
-    <span class="slide-num">4 / 8</span>
-  </section>
-
-  <!-- 第5页 -->
-  <section class="slide" data-time="50">
-    <div class="slide-header">
-      <h2>软件设计总图</h2>
-      <p class="key-point">主循环：环境采集→阈值判断→K210人脸检测→身份联动 → MQTT 远程指令解析</p>
-    </div>
-    <div class="flow-row">
-      <div class="img-cell">
-        <span class="flow-label">主函数流程 · 图4-1</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image22.png" alt="系统主流程"></div>
-      </div>
-      <div style="display:flex; flex-direction:column; gap:10px; min-height:0;">
-        <div class="img-cell" style="flex:1;">
-          <span class="flow-label sub">子函数 · 图4-2</span>
-          <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image24.png" alt="人脸识别"></div>
-          <p class="caption">YOLOv2 检测 + MobileFaceNet 比对 → 串口回传 STM32</p>
-        </div>
-        <div class="img-cell" style="flex:1;">
-          <span class="flow-label sub">子函数 · 图4-3</span>
-          <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image25.png" alt="报警流程"></div>
-          <p class="caption">熟人开门 / 陌生人声光+语音+上云告警</p>
-        </div>
-      </div>
-    </div>
-    <span class="timer-hint">建议 50 秒</span>
-    <span class="slide-num">5 / 8</span>
-  </section>
-
-  <!-- 第6页 -->
-  <section class="slide" data-time="40">
-    <div class="slide-header">
-      <h2>系统实物图</h2>
-      <p class="key-point">Altium 双层 PCB 设计 → 焊接联调 → 各模块紧凑集成于单板上电运行</p>
-    </div>
-    <div class="img-grid-2" style="flex:1;">
-      <div class="img-cell">
-        <span class="flow-label">PCB 设计</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image28.png" alt="PCB"></div>
-        <p class="caption"><strong>图5-1</strong> PCB 三维示意图</p>
-      </div>
-      <div class="img-cell">
-        <span class="flow-label">整机实物</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image29.png" alt="实物"></div>
-        <p class="caption"><strong>图5-2</strong> 焊接完成系统实物（OLED 实时显示环境数据）</p>
-      </div>
-    </div>
-    <span class="timer-hint">建议 40 秒</span>
-    <span class="slide-num">6 / 8</span>
-  </section>
-
-  <!-- 第7页 -->
+  <!-- 第3页：系统架构与模块划分 -->
   <section class="slide" data-time="45">
     <div class="slide-header">
-      <h2>调试结果</h2>
-      <p class="key-point success">核心指标达标：识别准确率 98.0% · 单次耗时 34.2ms · 超阈值报警 100% 触发</p>
+      <h2>系统架构与模块划分</h2>
+      <p class="key-point">双芯片分层架构：STM32 控制层 + K210 AI 层 + 环境感知 + OneNet 远程交互</p>
     </div>
-    <div class="slide-debug-body">
-      <div class="slide-debug-left">
-        <div class="stats">
-          <div class="stat-box featured">
-            <div class="num">98.0%</div>
-            <div class="label">人脸识别准确率（100 次随机测试）</div>
-          </div>
-          <div class="stat-box">
-            <div class="num">34.2ms</div>
-            <div class="label">单次识别平均耗时</div>
-          </div>
-          <div class="stat-box">
-            <div class="num">±0.1℃</div>
-            <div class="label">温度测量误差</div>
-          </div>
-          <div class="stat-box">
-            <div class="num">100%</div>
-            <div class="label">超阈值报警触发率</div>
-          </div>
-        </div>
-        <table>
-          <tr><th>测试项</th><th>优化前</th><th>优化后</th></tr>
-          <tr><td>暗光识别率</td><td>81%</td><td>96%</td></tr>
-          <tr><td>强光识别率</td><td>84%</td><td>98%</td></tr>
-          <tr><td>烟雾采样误差</td><td>+0.15V</td><td>±0.01V</td></tr>
-        </table>
-        <div class="demo-actions">
-          <button type="button" class="demo-btn primary" id="btn-avatars">
-            <span class="icon">👤</span> 现场测试头像
-          </button>
-          <button type="button" class="demo-btn secondary" id="btn-video">
-            <span class="icon">▶</span> 演示视频
-          </button>
-        </div>
-        <p class="note">联调逻辑：已知人脸→语音+开门；陌生人→仅播报；环境异常→声光报警+MQTT 上报</p>
+    <div class="slide-body tech-split">
+      <div class="tech-img-col sm">
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image5.png" alt="图2-1 系统框图"></div>
+        <p class="caption"><strong>图2-1</strong> 整体设计框图（感知/控制/执行/远程四层）</p>
       </div>
-      <div class="slide-debug-right img-cell">
-        <span class="flow-label">云平台验证</span>
-        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image27.jpeg" alt="APP"></div>
-        <p class="caption"><strong>OneNet APP</strong> 实时监测 · 远程开门 · 阈值在线设置</p>
+      <div class="tech-text-col tech-text-spread">
+        <div class="tech-block">
+          <h4>核心控制层</h4>
+          <p>以 <span class="highlight">STM32F103C8T6</span> 为主控核心，负责传感器数据采集（环境监测）、执行机构控制（舵机模拟开门、声光报警）及 K210 / ESP8266 多路串口调度。</p>
+          <div class="tech-metrics">
+            <span class="tech-metric">USART1 → K210</span>
+            <span class="tech-metric">USART2 → ESP8266</span>
+            <span class="tech-metric">ADC / I2C / PWM</span>
+          </div>
+        </div>
+        <div class="tech-block accent">
+          <h4>AI 视觉感知层</h4>
+          <p>采用 <span class="highlight">K210</span> 边缘侧计算芯片，内嵌轻量化 <span class="highlight">YOLOv2</span> 目标检测算法，实现实时人脸捕获与离线快速识别，识别结果经串口回传主控决策。</p>
+          <div class="tech-metrics">
+            <span class="tech-metric ok">KPU 硬件加速</span>
+            <span class="tech-metric">320×240 推理</span>
+          </div>
+        </div>
+        <div class="tech-block warn">
+          <h4>环境监测与物联联动</h4>
+          <p>集成 DHT11 温湿度、MQ-2 烟雾、FC-37 火焰传感器多路采集；通过 <span class="highlight">ESP8266 + MQTT</span> 与 OneNet 平台保持双向长连接，支持远程开门与阈值下发。</p>
+          <div class="tech-metrics">
+            <span class="tech-metric">自动/手动双模式</span>
+            <span class="tech-metric ok">本地 + 云端闭环</span>
+          </div>
+        </div>
       </div>
     </div>
     <span class="timer-hint">建议 45 秒</span>
+    <span class="slide-num">3 / 8</span>
+  </section>
+
+  <!-- 第4页：硬件电路设计与关键模块 -->
+  <section class="slide" data-time="55">
+    <div class="slide-header">
+      <h2>硬件电路设计与关键模块</h2>
+      <p class="key-point">电源分路稳压 · K210+OV2640 视觉链路 · 声光驱动与隔离保护</p>
+    </div>
+    <div class="slide-body tech-hw-five">
+      <div class="hw-col hw-col-left">
+        <div class="hw-tile">
+          <span class="hw-tile-label">主图 · 系统原理</span>
+          <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image21.png" alt="系统原理图"></div>
+          <p class="caption"><strong>图3-17</strong> 系统整体原理图</p>
+        </div>
+        <div class="hw-tile">
+          <span class="hw-tile-label">主控 · 最小系统</span>
+          <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image7.jpeg" alt="最小系统"></div>
+          <p class="caption"><strong>图3-2</strong> STM32 最小系统电路</p>
+        </div>
+      </div>
+      <div class="hw-col hw-col-right">
+        <div class="hw-unified">
+          <div class="hw-unified-body">
+            <div class="hw-unified-img">
+              <span class="hw-mini-label">传感</span>
+              <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image11.png" alt="传感器"></div>
+              <p class="caption">火焰 <strong>PA1</strong> / 烟雾 <strong>PB1</strong></p>
+            </div>
+            <div class="hw-unified-text">
+              <h4>电源管理电路</h4>
+              <p><span class="highlight">AMS1117-3.3V</span> 稳压分路 5V/3.3V，保障 K210、STM32、ESP8266 等多模块并发供电稳定。</p>
+            </div>
+          </div>
+        </div>
+        <div class="hw-unified accent">
+          <div class="hw-unified-body">
+            <div class="hw-unified-img">
+              <span class="hw-mini-label">通信</span>
+              <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image20.png" alt="ESP8266"></div>
+              <p class="caption">WiFi <strong>PA2/PA3</strong></p>
+            </div>
+            <div class="hw-unified-text">
+              <h4>AI 识别感知</h4>
+              <p><span class="highlight">K210</span> + OV2640，KPU 加速 YOLOv2；<strong>USART1</strong> 回传识别 ID 至 STM32 决策。</p>
+            </div>
+          </div>
+        </div>
+        <div class="hw-unified warn">
+          <div class="hw-unified-body">
+            <div class="hw-unified-img">
+              <span class="hw-mini-label">实物</span>
+              <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image6.png" alt="主控实物"></div>
+              <p class="caption">主控模块实物</p>
+            </div>
+            <div class="hw-unified-text">
+              <h4>声光报警与驱动</h4>
+              <p>ISD1820（PA4~6）、蜂鸣器、LED 联动；<strong>SG90 舵机 PA0</strong> PWM 模拟开门。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="timer-hint">建议 55 秒</span>
+    <span class="slide-num">4 / 8</span>
+  </section>
+
+  <!-- 第5页：软件流程与算法核心 -->
+  <section class="slide" data-time="55">
+    <div class="slide-header">
+      <h2>软件流程与算法核心</h2>
+      <p class="key-point">主程序状态机 + YOLOv2/KPU 子程序 + 环境异常中断优先响应</p>
+    </div>
+    <div class="slide-body tech-soft-split">
+      <div class="soft-col soft-col-left">
+        <div class="soft-card">
+          <span class="soft-card-label">主流程 · 图4-1</span>
+          <div class="soft-card-body">
+            <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image22.png" alt="主流程"></div>
+            <div class="soft-embed">
+              <div class="soft-embed-title">主程序状态机逻辑</div>
+              <div class="soft-embed-mono"><span class="kw">Init</span>：GPIO / TIM / USART / ADC / I2C 初始化</div>
+              <div class="soft-embed-mono"><span class="kw">while</span>(1)：传感轮询 · K210 帧 · MQTT 指令</div>
+              <div class="soft-embed-mono">分支：熟人开门 / 陌生人告警 / 环境超限上云</div>
+              <ul>
+                <li>串口中断接收 K210 识别结果</li>
+                <li>与 ADC/GPIO 采集并行调度</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="soft-col soft-col-right">
+        <div class="soft-card accent">
+          <span class="soft-card-label">子流程 · 图4-2</span>
+          <div class="soft-card-body">
+            <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image24.png" alt="AI流程"></div>
+            <div class="soft-embed">
+              <div class="soft-embed-title">AI 识别子程序（YOLOv2）</div>
+              <div class="soft-embed-mono">320×240 帧缓冲采集</div>
+              <div class="soft-embed-mono"><span class="kw">KPU</span> 推理 → <span class="kw">NMS</span> 筛选</div>
+              <div class="soft-embed-mono">特征比对 → UART 回传 FACE:ID</div>
+              <ul>
+                <li>余弦相似度 &gt; 0.7：白名单放行</li>
+                <li>否则 ID=0，触发陌生人告警</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card warn">
+          <span class="soft-card-label">子流程 · 图4-3</span>
+          <div class="soft-card-body">
+            <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image25.png" alt="报警流程"></div>
+            <div class="soft-embed">
+              <div class="soft-embed-title">异常中断响应机制</div>
+              <p>火焰/烟雾超阈立即挂起主流程，</p>
+              <p>优先蜂鸣器 + LED + ISD1820 播报，</p>
+              <p>JSON 经 MQTT 紧急上报 OneNet。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="timer-hint">建议 55 秒</span>
+    <span class="slide-num">5 / 8</span>
+  </section>
+
+  <!-- 第6页：工程实物与功能部署 -->
+  <section class="slide" data-time="45">
+    <div class="slide-header">
+      <h2>工程实物与功能部署</h2>
+      <p class="key-point">双层 PCB 工程化布局 · 门体前端感知 · 门内核心控制盒部署</p>
+    </div>
+    <div class="slide-body tech-proto-split">
+      <div class="proto-unified">
+        <div class="proto-unified-body">
+          <div class="proto-img">
+            <span class="proto-label">图5-1 · PCB 三维布局（Altium Designer）</span>
+            <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image28.png" alt="PCB"></div>
+          </div>
+          <div class="proto-embed">
+            <h4>硬件原型</h4>
+            <p>双层 PCB 按主控/传感/通信分区布局；焊接后通断与绝缘测试，保障长期上电稳定。</p>
+            <div class="tech-metrics">
+              <span class="tech-metric">强弱电分区</span>
+              <span class="tech-metric ok">双层板布线</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proto-unified accent">
+        <div class="proto-unified-body">
+          <div class="proto-img">
+            <span class="proto-label">图5-2 · 焊接联调整机实物</span>
+            <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image29.png" alt="实物"></div>
+          </div>
+          <div class="proto-embed">
+            <h4>结构部署</h4>
+            <ul>
+              <li><strong>门体前端</strong>：摄像头 + K210 + ISD1820，访客采集</li>
+              <li><strong>门内控制盒</strong>：STM32、OLED、ESP8266、报警执行</li>
+              <li><strong>分布式传感</strong>：温湿度/烟雾/火焰置于门框上方</li>
+            </ul>
+            <div class="proto-sub">
+              <h4>现场演示接口</h4>
+              <p>OLED 实时显示环境与识别状态；预留 SWD/按键阈值调节，支持答辩联调。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="timer-hint">建议 45 秒</span>
+    <span class="slide-num">6 / 8</span>
+  </section>
+
+  <!-- 第7页：系统测试与硬核指标 -->
+  <section class="slide" data-time="50">
+    <div class="slide-header">
+      <h2>系统测试与硬核指标</h2>
+      <p class="key-point success">数据驱动验证：识别性能 · 报警时延 · 长稳运行</p>
+    </div>
+    <div class="slide-body tech-test-layout">
+      <div class="dashboard">
+        <div class="dash-section">
+          <h4>人脸识别性能</h4>
+          <div class="dash-grid">
+            <div class="dash-kpi">
+              <div class="val green">96.5%</div>
+              <div class="lbl">注册用户识别准确率</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="val">≤180ms</div>
+              <div class="lbl">检测平均响应时间</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="val">200次</div>
+              <div class="lbl">多光照模拟测试</div>
+            </div>
+          </div>
+          <p class="dash-foot">强光/弱光/侧光；论文最优 <span class="highlight">98.0%</span>，推理 <span class="highlight">34.2ms</span></p>
+        </div>
+        <div class="dash-section">
+          <h4>环境监测与响应速度</h4>
+          <div class="dash-grid">
+            <div class="dash-kpi">
+              <div class="val">≤50ms</div>
+              <div class="lbl">本地声光报警延迟</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="val">≤1.2s</div>
+              <div class="lbl">云端/App 告警时延</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="val green">100%</div>
+              <div class="lbl">超阈值触发率</div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-section">
+          <h4>功耗与稳定性</h4>
+          <div class="dash-grid">
+            <div class="dash-kpi">
+              <div class="val green">72h</div>
+              <div class="lbl">连续运行无死机</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="val">±0.1℃</div>
+              <div class="lbl">温度测量误差</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="val">±0.01V</div>
+              <div class="lbl">烟雾采样误差</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-side">
+        <span class="test-side-head">云平台联调</span>
+        <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image27.jpeg" alt="APP"></div>
+        <p class="caption">OneNet APP 实测截图</p>
+        <div class="demo-actions">
+          <button type="button" class="demo-btn primary" id="btn-avatars"><span class="icon">👤</span> 现场测试头像</button>
+          <button type="button" class="demo-btn secondary" id="btn-video"><span class="icon">▶</span> 演示视频</button>
+        </div>
+      </div>
+    </div>
+    <span class="timer-hint">建议 50 秒</span>
     <span class="slide-num">7 / 8</span>
   </section>
 
@@ -574,14 +1023,9 @@
   <section class="slide" data-time="30">
     <div class="slide-header">
       <h2>致　谢</h2>
-      <p class="key-point">感谢各位老师在毕业设计全过程中的指导与帮助</p>
     </div>
-    <div class="thanks">
-      <p class="thanks-item">导师 <span class="names">朱晓梅</span> 老师 — 论文选题、硬件修改与撰写定稿的悉心指导</p>
-      <p class="thanks-item">辅导员 <span class="names">秦海燕</span> 老师 — 学习与生活上的关心与支持</p>
-      <p class="thanks-item">父母与家人 — 一直以来的默默支持与鼓励</p>
-      <p class="thanks-item">同学与挚友 — 毕业设计期间的陪伴与帮助</p>
-      <p class="thanks-closing">感谢各位老师聆听，恳请批评指正！</p>
+    <div class="thanks" style="flex:1;justify-content:center;align-items:center;">
+      <p class="thanks-closing" style="margin-top:0;font-size:2rem;padding:28px 48px;">感谢各位老师聆听！</p>
     </div>
     <span class="timer-hint">建议 30 秒 · 全篇约 5 分钟</span>
     <span class="slide-num">8 / 8</span>
@@ -611,13 +1055,14 @@
   <div class="modal-panel-inner" onclick="event.stopPropagation()">
     <h3>系统演示视频</h3>
     <p class="modal-desc">智能电子猫眼功能联调与现场测试录像</p>
-    <div class="video-box">
-      <div class="video-placeholder" id="video-placeholder">
-        <div class="video-icon">▶</div>
-        <p>演示视频待补充</p>
-        <p class="video-hint">上传 demo.mp4 至 ppt_assets 后，在 index.html 中设置 DEMO_VIDEO_URL 即可自动播放</p>
+    <div class="video-player-wrap">
+      <button type="button" class="video-nav-btn" id="video-prev" title="上一个视频">‹</button>
+      <div class="video-main">
+        <p class="video-label" id="video-label">云平台测试</p>
+        <video id="demo-video" class="demo-video" controls playsinline></video>
+        <p class="video-counter" id="video-counter">1 / 2</p>
       </div>
-      <video id="demo-video" controls playsinline style="display:none;"></video>
+      <button type="button" class="video-nav-btn" id="video-next" title="下一个视频">›</button>
     </div>
   </div>
 </div>
@@ -631,13 +1076,15 @@
 
 <script>
   const ASSET_BASE = 'https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/';
+  const VIDEOS = [
+    { src: ASSET_BASE + 'video1.mp4', label: '云平台测试' },
+    { src: ASSET_BASE + 'video2.mp4', label: '烟雾传感器测试' },
+  ];
   const AVATARS = [
     { src: ASSET_BASE + 'avatar2.png', label: '测试样本 1' },
     { src: ASSET_BASE + 'avatar3.png', label: '测试样本 2' },
     { src: ASSET_BASE + 'avatar4.png', label: '测试样本 3' },
   ];
-  const DEMO_VIDEO_URL = '';
-
   const slides = [...document.querySelectorAll('.slide')];
   const dotsEl = document.getElementById('dots');
   let cur = 0;
@@ -676,7 +1123,17 @@
   const videoModal = document.getElementById('video-modal');
   const avatarGrid = document.getElementById('avatar-grid');
   const demoVideo = document.getElementById('demo-video');
-  const videoPlaceholder = document.getElementById('video-placeholder');
+  const videoLabel = document.getElementById('video-label');
+  const videoCounter = document.getElementById('video-counter');
+  let videoCur = 0;
+
+  function showVideo(i) {
+    demoVideo.pause();
+    videoCur = (i + VIDEOS.length) % VIDEOS.length;
+    demoVideo.src = VIDEOS[videoCur].src;
+    videoLabel.textContent = VIDEOS[videoCur].label;
+    videoCounter.textContent = `${videoCur + 1} / ${VIDEOS.length}`;
+  }
 
   function getCaption(img) {
     const cell = img.closest('.img-cell');
@@ -753,14 +1210,9 @@
   }
 
   document.getElementById('btn-avatars').onclick = () => openModal(avatarModal);
-  document.getElementById('btn-video').onclick = () => {
-    openModal(videoModal);
-    if (DEMO_VIDEO_URL) {
-      demoVideo.src = DEMO_VIDEO_URL;
-      demoVideo.style.display = 'block';
-      videoPlaceholder.style.display = 'none';
-    }
-  };
+  document.getElementById('btn-video').onclick = () => { showVideo(0); openModal(videoModal); };
+  document.getElementById('video-prev').onclick = () => showVideo(videoCur - 1);
+  document.getElementById('video-next').onclick = () => showVideo(videoCur + 1);
 
   avatarModal.addEventListener('click', e => { if (e.target === avatarModal) closeModal(avatarModal); });
   videoModal.addEventListener('click', e => { if (e.target === videoModal) closeModal(videoModal); });
@@ -768,14 +1220,13 @@
     btn.onclick = () => closeModal(document.getElementById(btn.dataset.close));
   });
 
-  if (DEMO_VIDEO_URL) {
-    demoVideo.src = DEMO_VIDEO_URL;
-    demoVideo.style.display = 'block';
-    videoPlaceholder.style.display = 'none';
-  }
-
   document.addEventListener('keydown', e => {
     if (anyOverlayOpen()) {
+      if (videoModal.classList.contains('open') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+        e.preventDefault();
+        showVideo(videoCur + (e.key === 'ArrowRight' ? 1 : -1));
+        return;
+      }
       if (e.key === 'Escape') {
         e.preventDefault();
         if (lightbox.classList.contains('open')) closeLightbox();
