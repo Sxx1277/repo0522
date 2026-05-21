@@ -322,26 +322,33 @@ h3 {
   font-weight: 600;
 }
 
-.card .sub-line {
+.card .sub-line:not(li) {
   font-size: 0.82rem;
   color: var(--text-muted);
   margin-top: 2px;
   padding-left: 0;
 }
 
-/* 带对勾列表 */
+/* 带对勾列表（flex 布局，避免圆角+毛玻璃裁切左侧图标） */
+.list-check {
+  padding-left: 2px;
+}
+
 .list-check li {
-  position: relative;
-  padding-left: 26px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  padding-left: 0;
 }
 
 .list-check li::before {
   content: "✓";
-  position: absolute;
-  left: 0;
-  top: 4px;
-  width: 18px;
-  height: 18px;
+  position: static;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -353,39 +360,68 @@ h3 {
   border: 1px solid rgba(52, 211, 153, 0.35);
 }
 
+.list-check li.primary-line,
+.list-check li.sub-line {
+  font-size: inherit;
+  color: inherit;
+}
+
+.list-check li.sub-line {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
 /* 痛点列表 */
 .list-problem li {
-  position: relative;
-  padding-left: 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 0;
+  padding-left: 0;
   color: var(--danger) !important;
 }
 
 .list-problem li::before {
   content: "!";
-  position: absolute;
-  left: 0;
+  position: static;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
   font-weight: 800;
   color: var(--warn);
+  background: var(--warn-bg);
+  border-radius: 50%;
+  border: 1px solid rgba(245, 158, 11, 0.35);
 }
 
 /* 数字列表 */
 .list-num {
   counter-reset: item;
+  padding-left: 2px;
 }
 
 .list-num li {
   counter-increment: item;
-  padding-left: 32px;
-  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  padding-left: 0;
+  position: static;
 }
 
 .list-num li::before {
   content: counter(item);
-  position: absolute;
-  left: 0;
-  top: 5px;
+  position: static;
+  flex-shrink: 0;
   width: 22px;
   height: 22px;
+  margin-top: 1px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -449,6 +485,21 @@ h3 {
   flex: 1;
   min-height: 0;
   align-content: stretch;
+}
+
+/* 第2页：防止卡片内列表被圆角裁切 */
+.slide-bg .card {
+  overflow: visible;
+  min-height: 0;
+}
+
+.slide-bg .content-grid .card {
+  padding-left: clamp(20px, 2.4vw, 28px);
+  padding-right: clamp(18px, 2.2vw, 24px);
+}
+
+.slide-bg .card ul {
+  overflow: visible;
 }
 
 /* ---------- 第1页：封面 ---------- */
