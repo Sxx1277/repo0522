@@ -246,6 +246,85 @@
     }
     .slide-num { right: 28px; }
     .timer-hint { left: 28px; }
+    .slide-debug-body {
+      display: grid; grid-template-columns: 1fr 0.95fr; gap: 16px;
+      flex: 1; min-height: 0;
+    }
+    .slide-debug-left { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+    .slide-debug-left .stats { margin-bottom: 10px; }
+    .slide-debug-left .stat-box { padding: 10px 8px; }
+    .slide-debug-left .stat-box .num { font-size: 1.5rem; }
+    .slide-debug-left .stat-box.featured .num { font-size: 1.85rem; }
+    .slide-debug-left table { font-size: 0.78rem; margin-top: 8px; }
+    .slide-debug-left th, .slide-debug-left td { padding: 6px 8px; }
+    .slide-debug-left .note { margin-top: 8px; font-size: 0.78rem; padding: 8px 10px; flex-shrink: 0; }
+    .demo-actions { display: flex; gap: 10px; margin-top: 10px; flex-shrink: 0; }
+    .demo-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 14px; border: none; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 700; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .demo-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+    .demo-btn.primary { background: var(--primary); color: #fff; }
+    .demo-btn.primary:hover { background: #1e40af; }
+    .demo-btn.secondary { background: var(--surface); color: var(--primary); border: 2px solid var(--primary); }
+    .demo-btn.secondary:hover { background: var(--primary-light); }
+    .demo-btn .icon { font-size: 1.1rem; }
+    .slide-debug-right { min-height: 0; display: flex; flex-direction: column; }
+    .slide-debug-right .img-wrap { flex: 1; }
+    .modal-panel {
+      display: none; position: fixed; inset: 0; z-index: 210;
+      background: rgba(15, 23, 42, 0.88);
+      align-items: center; justify-content: center;
+      padding: 40px 24px 56px;
+    }
+    .modal-panel.open { display: flex; }
+    .modal-panel-inner {
+      background: var(--surface); border-radius: 16px;
+      padding: 24px 28px 28px; max-width: 920px; width: 96vw;
+      max-height: 88vh; overflow: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    }
+    .modal-panel-inner h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 6px; }
+    .modal-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px; }
+    .avatar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .avatar-item {
+      text-align: center; cursor: zoom-in;
+      border-radius: 12px; overflow: hidden;
+      border: 2px solid var(--border); background: #f8fafc;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .avatar-item:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(29, 78, 216, 0.15);
+    }
+    .avatar-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+    .avatar-item span {
+      display: block; padding: 8px; font-size: 0.8rem;
+      font-weight: 600; color: var(--primary); background: var(--primary-light);
+    }
+    .video-box { text-align: center; min-height: 240px; }
+    .video-placeholder {
+      padding: 40px 24px; color: var(--text-muted);
+      border: 2px dashed var(--border); border-radius: 12px; width: 100%;
+      background: #f8fafc;
+    }
+    .video-placeholder .video-icon {
+      width: 72px; height: 72px; margin: 0 auto 16px;
+      border-radius: 50%; background: var(--primary-light);
+      color: var(--primary); font-size: 2rem; line-height: 72px;
+    }
+    .video-placeholder p { font-size: 1rem; font-weight: 600; color: var(--text-secondary); }
+    .video-hint {
+      font-size: 0.82rem !important; font-weight: 400 !important;
+      margin-top: 8px; color: var(--text-muted) !important;
+    }
+    #demo-video { width: 100%; max-height: 70vh; border-radius: 10px; background: #000; }
+    @media (max-width: 900px) {
+      .avatar-grid { grid-template-columns: repeat(2, 1fr); }
+      .slide-debug-body { grid-template-columns: 1fr; }
+    }
     .nav {
       position: fixed; bottom: 0; left: 0; right: 0; height: 50px;
       background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
@@ -445,8 +524,8 @@
       <h2>调试结果</h2>
       <p class="key-point success">核心指标达标：识别准确率 98.0% · 单次耗时 34.2ms · 超阈值报警 100% 触发</p>
     </div>
-    <div class="content-grid" style="grid-template-columns: 1fr 1.05fr;">
-      <div>
+    <div class="slide-debug-body">
+      <div class="slide-debug-left">
         <div class="stats">
           <div class="stat-box featured">
             <div class="num">98.0%</div>
@@ -465,15 +544,23 @@
             <div class="label">超阈值报警触发率</div>
           </div>
         </div>
-        <table style="margin-top:12px;">
+        <table>
           <tr><th>测试项</th><th>优化前</th><th>优化后</th></tr>
           <tr><td>暗光识别率</td><td>81%</td><td>96%</td></tr>
           <tr><td>强光识别率</td><td>84%</td><td>98%</td></tr>
           <tr><td>烟雾采样误差</td><td>+0.15V</td><td>±0.01V</td></tr>
         </table>
+        <div class="demo-actions">
+          <button type="button" class="demo-btn primary" id="btn-avatars">
+            <span class="icon">👤</span> 现场测试头像
+          </button>
+          <button type="button" class="demo-btn secondary" id="btn-video">
+            <span class="icon">▶</span> 演示视频
+          </button>
+        </div>
         <p class="note">联调逻辑：已知人脸→语音+开门；陌生人→仅播报；环境异常→声光报警+MQTT 上报</p>
       </div>
-      <div class="img-cell">
+      <div class="slide-debug-right img-cell">
         <span class="flow-label">云平台验证</span>
         <div class="img-wrap"><img src="https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/image27.jpeg" alt="APP"></div>
         <p class="caption"><strong>OneNet APP</strong> 实时监测 · 远程开门 · 阈值在线设置</p>
@@ -510,6 +597,31 @@
   </div>
 </div>
 
+<div class="modal-panel" id="avatar-modal" aria-hidden="true">
+  <button class="lightbox-close modal-close" type="button" data-close="avatar-modal" title="关闭 (Esc)">×</button>
+  <div class="modal-panel-inner" onclick="event.stopPropagation()">
+    <h3>现场测试 · 注册人脸样本</h3>
+    <p class="modal-desc">以下 3 张头像用于答辩现场人脸识别演示，点击图片可放大查看</p>
+    <div class="avatar-grid" id="avatar-grid"></div>
+  </div>
+</div>
+
+<div class="modal-panel" id="video-modal" aria-hidden="true">
+  <button class="lightbox-close modal-close" type="button" data-close="video-modal" title="关闭 (Esc)">×</button>
+  <div class="modal-panel-inner" onclick="event.stopPropagation()">
+    <h3>系统演示视频</h3>
+    <p class="modal-desc">智能电子猫眼功能联调与现场测试录像</p>
+    <div class="video-box">
+      <div class="video-placeholder" id="video-placeholder">
+        <div class="video-icon">▶</div>
+        <p>演示视频待补充</p>
+        <p class="video-hint">上传 demo.mp4 至 ppt_assets 后，在 index.html 中设置 DEMO_VIDEO_URL 即可自动播放</p>
+      </div>
+      <video id="demo-video" controls playsinline style="display:none;"></video>
+    </div>
+  </div>
+</div>
+
 <nav class="nav">
   <button id="prev" disabled>← 上一页</button>
   <div class="dots" id="dots"></div>
@@ -518,6 +630,14 @@
 </nav>
 
 <script>
+  const ASSET_BASE = 'https://raw.githubusercontent.com/Sxx1277/repo0522/main/ppt_assets/';
+  const AVATARS = [
+    { src: ASSET_BASE + 'avatar2.png', label: '测试样本 1' },
+    { src: ASSET_BASE + 'avatar3.png', label: '测试样本 2' },
+    { src: ASSET_BASE + 'avatar4.png', label: '测试样本 3' },
+  ];
+  const DEMO_VIDEO_URL = '';
+
   const slides = [...document.querySelectorAll('.slide')];
   const dotsEl = document.getElementById('dots');
   let cur = 0;
@@ -552,6 +672,11 @@
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxCaption = document.getElementById('lightbox-caption');
   const lightboxInner = document.getElementById('lightbox-inner');
+  const avatarModal = document.getElementById('avatar-modal');
+  const videoModal = document.getElementById('video-modal');
+  const avatarGrid = document.getElementById('avatar-grid');
+  const demoVideo = document.getElementById('demo-video');
+  const videoPlaceholder = document.getElementById('video-placeholder');
 
   function getCaption(img) {
     const cell = img.closest('.img-cell');
@@ -566,10 +691,10 @@
     return slideCap ? slideCap.textContent.trim() : (img.alt || '');
   }
 
-  function openLightbox(img) {
+  function openLightbox(img, captionText) {
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
-    lightboxCaption.textContent = getCaption(img);
+    lightboxCaption.textContent = captionText || getCaption(img);
     lightbox.classList.add('open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -578,8 +703,10 @@
   function closeLightbox() {
     lightbox.classList.remove('open');
     lightbox.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
     lightboxImg.src = '';
+    if (!avatarModal.classList.contains('open') && !videoModal.classList.contains('open')) {
+      document.body.style.overflow = '';
+    }
   }
 
   document.querySelectorAll('.img-wrap').forEach(wrap => {
@@ -595,9 +722,66 @@
   });
   lightboxInner.addEventListener('click', e => e.stopPropagation());
 
+  AVATARS.forEach(a => {
+    const item = document.createElement('div');
+    item.className = 'avatar-item';
+    item.innerHTML = `<img src="${a.src}" alt="${a.label}"><span>${a.label}</span>`;
+    const img = item.querySelector('img');
+    img.addEventListener('click', e => {
+      e.stopPropagation();
+      openLightbox(img, a.label + ' · 现场测试头像');
+    });
+    avatarGrid.appendChild(item);
+  });
+
+  function openModal(el) {
+    el.classList.add('open');
+    el.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(el) {
+    el.classList.remove('open');
+    el.setAttribute('aria-hidden', 'true');
+    if (el === videoModal) demoVideo.pause();
+    if (!lightbox.classList.contains('open') && !avatarModal.classList.contains('open') && !videoModal.classList.contains('open')) {
+      document.body.style.overflow = '';
+    }
+  }
+  function anyOverlayOpen() {
+    return lightbox.classList.contains('open') ||
+      avatarModal.classList.contains('open') || videoModal.classList.contains('open');
+  }
+
+  document.getElementById('btn-avatars').onclick = () => openModal(avatarModal);
+  document.getElementById('btn-video').onclick = () => {
+    openModal(videoModal);
+    if (DEMO_VIDEO_URL) {
+      demoVideo.src = DEMO_VIDEO_URL;
+      demoVideo.style.display = 'block';
+      videoPlaceholder.style.display = 'none';
+    }
+  };
+
+  avatarModal.addEventListener('click', e => { if (e.target === avatarModal) closeModal(avatarModal); });
+  videoModal.addEventListener('click', e => { if (e.target === videoModal) closeModal(videoModal); });
+  document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.onclick = () => closeModal(document.getElementById(btn.dataset.close));
+  });
+
+  if (DEMO_VIDEO_URL) {
+    demoVideo.src = DEMO_VIDEO_URL;
+    demoVideo.style.display = 'block';
+    videoPlaceholder.style.display = 'none';
+  }
+
   document.addEventListener('keydown', e => {
-    if (lightbox.classList.contains('open')) {
-      if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+    if (anyOverlayOpen()) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        if (lightbox.classList.contains('open')) closeLightbox();
+        else if (avatarModal.classList.contains('open')) closeModal(avatarModal);
+        else if (videoModal.classList.contains('open')) closeModal(videoModal);
+      }
       return;
     }
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1); }
