@@ -139,7 +139,46 @@
       border: 1px solid var(--border); box-shadow: var(--shadow-sm);
       padding: 10px; overflow: hidden;
     }
-    .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .img-wrap { cursor: zoom-in; position: relative; }
+    .img-wrap::after {
+      content: "点击放大";
+      position: absolute; right: 10px; bottom: 10px;
+      font-size: 0.7rem; font-weight: 600; color: #fff;
+      background: rgba(29, 78, 216, 0.85);
+      padding: 4px 10px; border-radius: 6px;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+    }
+    .img-wrap:hover::after { opacity: 1; }
+    .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(15, 23, 42, 0.88);
+      align-items: center; justify-content: center;
+      padding: 48px 24px 64px; cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative; max-width: 96vw; max-height: 90vh;
+      display: flex; flex-direction: column; align-items: center;
+      cursor: default;
+    }
+    .lightbox-inner img {
+      max-width: 96vw; max-height: calc(90vh - 48px);
+      object-fit: contain; border-radius: 8px;
+      background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .lightbox-caption {
+      margin-top: 12px; color: #e2e8f0; font-size: 0.9rem;
+      text-align: center; max-width: 90vw;
+    }
+    .lightbox-close {
+      position: fixed; top: 16px; right: 20px; z-index: 201;
+      width: 44px; height: 44px; border: none; border-radius: 50%;
+      background: rgba(255,255,255,0.95); color: var(--text);
+      font-size: 1.5rem; line-height: 1; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .lightbox-close:hover { background: #fff; color: var(--primary); }
     .img-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; min-height: 0; }
     .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
     .img-cell { display: flex; flex-direction: column; min-height: 0; }
@@ -463,6 +502,14 @@
 
 </div>
 
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightbox-close" type="button" title="关闭 (Esc)">×</button>
+  <div class="lightbox-inner" id="lightbox-inner">
+    <img id="lightbox-img" src="" alt="">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+</div>
+
 <nav class="nav">
   <button id="prev" disabled>← 上一页</button>
   <div class="dots" id="dots"></div>
@@ -501,7 +548,58 @@
     else document.exitFullscreen();
   };
 
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxInner = document.getElementById('lightbox-inner');
+
+  function getCaption(img) {
+    const cell = img.closest('.img-cell');
+    if (cell) {
+      const c = cell.querySelector('.caption');
+      if (c) return c.textContent.trim();
+    }
+    const wrap = img.closest('.img-wrap');
+    const next = wrap?.nextElementSibling;
+    if (next?.classList.contains('caption')) return next.textContent.trim();
+    const slideCap = img.closest('.slide')?.querySelector('.caption');
+    return slideCap ? slideCap.textContent.trim() : (img.alt || '');
+  }
+
+  function openLightbox(img) {
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = getCaption(img);
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  }
+
+  document.querySelectorAll('.img-wrap').forEach(wrap => {
+    wrap.addEventListener('click', e => {
+      const img = wrap.querySelector('img');
+      if (img?.src) { e.stopPropagation(); openLightbox(img); }
+    });
+  });
+
+  document.getElementById('lightbox-close').onclick = closeLightbox;
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  lightboxInner.addEventListener('click', e => e.stopPropagation());
+
   document.addEventListener('keydown', e => {
+    if (lightbox.classList.contains('open')) {
+      if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+      return;
+    }
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1); }
     if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1); }
     if (e.key === 'Home') go(0);
